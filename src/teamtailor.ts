@@ -312,7 +312,7 @@ export class TeamtailorClient {
         }
       }
 
-      if (res.data.length < perPage || applications.length >= maxCandidates) break;
+      if (res.data.length < perPage || candidates.length >= maxCandidates) break;
       if (res.meta && res.meta['page-count'] !== undefined && page >= (res.meta['page-count'] ?? 0)) break;
       page++;
     }
