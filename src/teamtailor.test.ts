@@ -186,7 +186,6 @@ describe("TeamtailorClient", () => {
         attributes: { "first-name": "John", "last-name": "Smith", email: "john@example.com" },
       };
 
-      let callCount = 0;
       vi.mocked(https.request).mockImplementation((urlOrPath, _options, callback) => {
         const url = typeof urlOrPath === "string" ? new URL(urlOrPath) : urlOrPath;
         const path = url.pathname;
