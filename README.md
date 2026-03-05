@@ -17,7 +17,7 @@ MCP servers are configured differently depending on the client that you are usin
       "command": "npx",
       "args": [
         "-y",
-        "@crunchloop/mcp-teamtailor"
+        "@yienyien81/mcp-teamtailor"
       ],
       "env": {
         "TEAMTAILOR_URL": "https://api.teamtailor.com/v1",

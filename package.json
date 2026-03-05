@@ -1,5 +1,5 @@
 {
-  "name": "@crunchloop/mcp-teamtailor",
+  "name": "@yienyien81/mcp-teamtailor",
   "version": "0.0.2",
   "description": "MCP for Teamtailor",
   "private": false,
@@ -7,7 +7,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/crunchloop/mcp-teamtailor.git"
+    "url": "git+https://github.com/yienyien/mcp-teamtailor.git"
   },
   "publishConfig": {
     "access": "public",
