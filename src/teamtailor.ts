@@ -122,6 +122,23 @@ export interface ListJobApplicationsParams {
   sort?: string;
 }
 
+/** JSON:API resource object in the `included` array (when using the `include` query param). */
+export interface JsonApiIncludedResource {
+  type: string;
+  id: string;
+  attributes?: Record<string, unknown>;
+  relationships?: Record<string, unknown>;
+  links?: Record<string, string>;
+}
+
+/** Generic JSON:API list response with optional meta, links, and included. */
+export interface JsonApiListResponse<T> {
+  data: T[];
+  meta?: { 'record-count'?: number; 'page-count'?: number };
+  links?: Record<string, string>;
+  included?: JsonApiIncludedResource[];
+}
+
 /**
  * A simple client for the Teamtailor API.
  */
@@ -227,7 +244,7 @@ export class TeamtailorClient {
    * List job applications, optionally filtered by job ID (filter[job-id]=xxx).
    * Use include=candidate to get candidate data in the same response.
    */
-  async listJobApplications(params: ListJobApplicationsParams = {}): Promise<{ data: JobApplication[]; meta?: { 'record-count'?: number; 'page-count'?: number }; links?: Record<string, string> }> {
+  async listJobApplications(params: ListJobApplicationsParams = {}): Promise<JsonApiListResponse<JobApplication>> {
     const url = new URL(`${this.baseUrl}/job-applications`);
     this.addJsonApiPagination(url, params.page, params.perPage);
 
@@ -253,7 +270,7 @@ export class TeamtailorClient {
       url.searchParams.append('sort', params.sort);
     }
 
-    return this.request<{ data: JobApplication[]; meta?: { 'record-count'?: number; 'page-count'?: number }; links?: Record<string, string> }>(url);
+    return this.request<JsonApiListResponse<JobApplication>>(url);
   }
 
   /**
@@ -280,7 +297,7 @@ export class TeamtailorClient {
       applications.push(...res.data);
 
       // Parse included candidates if present (JSON:API include)
-      const inc = (res as { included?: Array<{ type: string; id: string; attributes?: Record<string, unknown> }> }).included;
+      const inc = res.included;
       if (inc) {
         for (const ref of res.data) {
           const candRef = ref.relationships?.candidate?.data;
